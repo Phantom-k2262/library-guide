@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.floor-map {
+  position: relative;
+  width: 100%;
+  max-width: 34rem;
+  border: 1px solid #ccc;
+}
+
+.spot-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.spot-sheet {
+  position: sticky;
+  bottom: 0;
+  padding: 1rem;
+  background: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.legend span {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.25rem;
+}
