@@ -2,3 +2,6 @@ node_modules
 .next
 out
 *.log
+data/spot-tap-counts.json
+data/spot-tap-counts.e2e.json
+coverage
