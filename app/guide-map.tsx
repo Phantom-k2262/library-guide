@@ -4,7 +4,9 @@ import { useState } from "react";
 import { categoryColor, CATEGORY_COLOR } from "../domain/categories";
 import { isKpiTarget } from "../domain/kpi";
 import { FLOOR_X_MAX, FLOOR_Y_MAX, placePins } from "../domain/layout";
+import { booksForSpot } from "../domain/books";
 import type { SpotView } from "../domain/spots";
+import { FloorPlan } from "./floor-plan";
 
 function recordSpotTap(spotId: number) {
   void fetch("/api/spot-taps", {
@@ -42,20 +44,23 @@ export function GuideMap({ floor1, floor2 }: Props) {
   }
 
   return (
-    <section>
-      <p>{floor}階</p>
-      <div>
-        <button type="button" aria-pressed={floor === 1} onClick={() => showFloor(1)}>
-          1階
-        </button>
-        <button type="button" aria-pressed={floor === 2} onClick={() => showFloor(2)}>
-          2階
-        </button>
-      </div>
+    <section className="guide">
+      <header className="guide-head">
+        <p>{floor}階</p>
+        <div className="floor-tabs" role="tablist" aria-label="階">
+          <button type="button" aria-pressed={floor === 1} onClick={() => showFloor(1)}>
+            1階
+          </button>
+          <button type="button" aria-pressed={floor === 2} onClick={() => showFloor(2)}>
+            2階
+          </button>
+        </div>
+      </header>
       <div
         className="floor-map"
         style={{ aspectRatio: `${FLOOR_X_MAX} / ${FLOOR_Y_MAX}` }}
       >
+        <FloorPlan floor={floor} />
         {spots.map((spot) => {
           const pin = pins.find((item) => item.id === spot.id)!;
           return (
@@ -86,14 +91,41 @@ export function GuideMap({ floor1, floor2 }: Props) {
         ))}
       </ul>
       {openSpot ? (
-        <aside className="spot-sheet">
-          <p>{openSpot.name}</p>
-          <p>{openSpot.category}</p>
-          <p>{openSpot.desc}</p>
-          <button type="button" onClick={() => setOpenId(null)}>
-            閉じる
-          </button>
-        </aside>
+        <>
+          <button
+            type="button"
+            className="sheet-backdrop"
+            aria-label="説明を閉じる"
+            onClick={() => setOpenId(null)}
+          />
+          <aside className="spot-sheet">
+            <div className="sheet-handle" />
+            <div className="sheet-top">
+              <span
+                className="sheet-chip"
+                style={{ background: categoryColor(openSpot.category) }}
+              >
+                {openSpot.category}
+              </span>
+              <button type="button" className="sheet-close" onClick={() => setOpenId(null)}>
+                閉じる
+              </button>
+            </div>
+            <h2>{openSpot.name}</h2>
+            <p>{openSpot.desc}</p>
+            <section className="sheet-books">
+              <h3>おすすめ本</h3>
+              <ul>
+                {booksForSpot(openSpot.id).map((book) => (
+                  <li key={book.id}>
+                    <span>{book.title}</span>
+                    <span>{book.author}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </aside>
+        </>
       ) : null}
     </section>
   );

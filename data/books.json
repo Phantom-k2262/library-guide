@@ -1,0 +1,22 @@
+[
+  {"id": 1, "spotId": 1, "title": "テスト本・新刊01", "author": "見本 太郎"},
+  {"id": 2, "spotId": 2, "title": "テスト本・文芸02", "author": "見本 花子"},
+  {"id": 3, "spotId": 3, "title": "テスト本・文庫03", "author": "見本 次郎"},
+  {"id": 4, "spotId": 4, "title": "テスト本・児童04", "author": "見本 さくら"},
+  {"id": 5, "spotId": 5, "title": "テスト本・ティーンズ05", "author": "見本 海斗"},
+  {"id": 6, "spotId": 6, "title": "テスト本・雑誌06", "author": "見本 編集部"},
+  {"id": 7, "spotId": 7, "title": "テスト本・映像07", "author": "見本 映像"},
+  {"id": 8, "spotId": 8, "title": "テスト本・受取08", "author": "見本 予約"},
+  {"id": 9, "spotId": 9, "title": "テスト本・カフェ09", "author": "見本 頁"},
+  {"id": 10, "spotId": 10, "title": "テスト本・展示10", "author": "見本 展示"},
+  {"id": 11, "spotId": 11, "title": "テスト本・実用11", "author": "見本 園芸"},
+  {"id": 12, "spotId": 12, "title": "テスト本・語学12", "author": "見本 資格"},
+  {"id": 13, "spotId": 13, "title": "テスト本・ビジネス13", "author": "見本 起業"},
+  {"id": 14, "spotId": 14, "title": "テスト本・郷土14", "author": "見本 市史"},
+  {"id": 15, "spotId": 15, "title": "テスト本・端末15", "author": "見本 写真"},
+  {"id": 16, "spotId": 16, "title": "テスト本・学習16", "author": "見本 自習"},
+  {"id": 17, "spotId": 17, "title": "テスト本・調べ物17", "author": "見本 司書"},
+  {"id": 18, "spotId": 18, "title": "テスト本・おはなし18", "author": "見本 絵本"},
+  {"id": 19, "spotId": 19, "title": "テスト本・読書会19", "author": "見本 夜話"},
+  {"id": 20, "spotId": 20, "title": "テスト本・テラス20", "author": "見本 屋上"}
+]

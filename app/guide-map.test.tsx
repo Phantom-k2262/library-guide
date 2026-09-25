@@ -3,6 +3,7 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { booksForSpot } from "../domain/books";
 import { GuideMap } from "./guide-map";
 import { spotsOnFloor } from "../domain/spots";
 
@@ -66,11 +67,19 @@ describe("説明", () => {
     expect(within(sheet).getByText(literary!.name)).toBeTruthy();
     expect(within(sheet).getByText(literary!.category)).toBeTruthy();
     expect(within(sheet).getByText(literary!.desc)).toBeTruthy();
+    expect(within(sheet).getByRole("heading", { name: "おすすめ本" })).toBeTruthy();
     expect(screen.queryByText(/平均滞在|stay_min/)).toBeNull();
+
+    const literaryBook = booksForSpot(literary!.id)[0];
+    const bunkoBook = booksForSpot(bunko!.id)[0];
+    expect(within(sheet).getByText(literaryBook!.title)).toBeTruthy();
+    expect(screen.queryByText(bunkoBook!.title)).toBeNull();
 
     await user.click(screen.getByRole("button", { name: bunko!.name }));
     expect(screen.getByText(bunko!.desc)).toBeTruthy();
     expect(screen.queryByText(literary!.desc)).toBeNull();
+    expect(screen.getByText(bunkoBook!.title)).toBeTruthy();
+    expect(screen.queryByText(literaryBook!.title)).toBeNull();
 
     await user.click(screen.getByRole("button", { name: "閉じる" }));
     expect(screen.queryByText(bunko!.desc)).toBeNull();
