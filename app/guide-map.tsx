@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { categoryColor, CATEGORY_COLOR } from "../domain/categories";
 import { isKpiTarget } from "../domain/kpi";
-import { FLOOR_X_MAX, FLOOR_Y_MAX, toPinPosition } from "../domain/layout";
+import { FLOOR_X_MAX, FLOOR_Y_MAX, placePins } from "../domain/layout";
 import type { SpotView } from "../domain/spots";
 
 function recordSpotTap(spotId: number) {
@@ -23,6 +23,7 @@ export function GuideMap({ floor1, floor2 }: Props) {
   const [floor, setFloor] = useState<1 | 2>(1);
   const [openId, setOpenId] = useState<number | null>(null);
   const spots = floor === 1 ? floor1 : floor2;
+  const pins = placePins(spots);
   const openSpot = spots.find((spot) => spot.id === openId) ?? null;
 
   function showFloor(next: 1 | 2) {
@@ -56,7 +57,7 @@ export function GuideMap({ floor1, floor2 }: Props) {
         style={{ aspectRatio: `${FLOOR_X_MAX} / ${FLOOR_Y_MAX}` }}
       >
         {spots.map((spot) => {
-          const pin = toPinPosition(spot.x, spot.y);
+          const pin = pins.find((item) => item.id === spot.id)!;
           return (
             <button
               key={spot.id}

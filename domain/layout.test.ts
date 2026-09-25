@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FLOOR_X_MAX, FLOOR_Y_MAX, toPinPosition } from "./layout";
+import { FLOOR_X_MAX, FLOOR_Y_MAX, PIN_SEPARATION_METERS, placePins, toPinPosition } from "./layout";
 import { spotsOnFloor } from "./spots";
 
 const expected = [
@@ -53,5 +53,20 @@ describe("配置", () => {
     const nearEntrance = toPinPosition(3, 2);
     const farther = toPinPosition(5, 5);
     expect(nearEntrance.topPercent).toBeGreaterThan(farther.topPercent);
+  });
+
+  it("児童書とおはなし会は押し分けられる距離に開く", () => {
+    const child = spotsOnFloor(1).find((spot) => spot.id === 4)!;
+    const story = spotsOnFloor(1).find((spot) => spot.id === 18)!;
+    const raw = Math.hypot(child.x - story.x, child.y - story.y);
+    expect(raw).toBeLessThan(PIN_SEPARATION_METERS);
+
+    const pins = placePins(spotsOnFloor(1));
+    const childPin = pins.find((pin) => pin.id === 4)!;
+    const storyPin = pins.find((pin) => pin.id === 18)!;
+    expect(Math.hypot(childPin.x - storyPin.x, childPin.y - storyPin.y)).toBeGreaterThanOrEqual(
+      PIN_SEPARATION_METERS,
+    );
+    expect(childPin.leftPercent).not.toBeCloseTo(storyPin.leftPercent);
   });
 });

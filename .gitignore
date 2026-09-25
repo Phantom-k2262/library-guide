@@ -5,3 +5,5 @@ out
 data/spot-tap-counts.json
 data/spot-tap-counts.e2e.json
 coverage
+.open-next
+.dev.vars

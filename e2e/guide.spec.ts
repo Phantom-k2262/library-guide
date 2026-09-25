@@ -55,3 +55,12 @@ test("閉じたあと開き直すとさらに1増え、390幅で操作できる"
     after.counts.find((row: { spotId: number; tapCount: number }) => row.spotId === 2)?.tapCount ?? 0;
   expect(targetCount).toBe(start + 2);
 });
+
+test("幅390で児童書とおはなし会を押し分けられる", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "児童書コーナー" }).click();
+  await expect(page.locator(".spot-sheet")).toContainText("よみきかせスペース併設");
+  await page.getByRole("button", { name: "おはなし会（毎週土曜11時）" }).click();
+  await expect(page.locator(".spot-sheet")).toContainText("児童書コーナーで開催するよみきかせ会");
+});
