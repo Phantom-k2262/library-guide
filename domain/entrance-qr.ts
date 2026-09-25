@@ -17,7 +17,7 @@ export function publicGuideOrigin(
     forwardedHost?: string | null;
     forwardedProto?: string | null;
   },
-  env: { GUIDE_PUBLIC_ORIGIN?: string } = process.env,
+  env: Record<string, string | undefined> = process.env,
 ): string {
   const fromEnv = env.GUIDE_PUBLIC_ORIGIN?.trim().replace(/\/$/, "");
   if (fromEnv) {
