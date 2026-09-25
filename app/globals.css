@@ -37,6 +37,29 @@ body {
   border-top: 1px solid #ccc;
 }
 
+.qr-print ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.qr-print img {
+  display: block;
+  background: #fff;
+}
+
+@media print {
+  body {
+    padding: 0;
+  }
+
+  .qr-print li {
+    break-inside: avoid;
+  }
+}
+
 .legend span {
   display: inline-block;
   width: 0.75rem;
