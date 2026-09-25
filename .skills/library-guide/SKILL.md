@@ -1,8 +1,10 @@
 ---
 
-## name: library-guide
+name: library-guide
 description: >-
   館内案内（library-guide）の実装・修正で使う。市立図書館の入口QRから開く館内地図、スポット説明、説明タップ数を扱うときに読む。おすすめ本、イベント、スタンプラリーは今回の範囲外。
+
+---
 
 # 館内案内
 
