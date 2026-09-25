@@ -2,8 +2,17 @@
 
 import { useState } from "react";
 import { categoryColor, CATEGORY_COLOR } from "../domain/categories";
+import { isKpiTarget } from "../domain/kpi";
 import { FLOOR_X_MAX, FLOOR_Y_MAX, toPinPosition } from "../domain/layout";
 import type { SpotView } from "../domain/spots";
+
+function recordSpotTap(spotId: number) {
+  void fetch("/api/spot-taps", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ spotId }),
+  });
+}
 
 type Props = {
   floor1: SpotView[];
@@ -19,6 +28,16 @@ export function GuideMap({ floor1, floor2 }: Props) {
   function showFloor(next: 1 | 2) {
     setFloor(next);
     setOpenId(null);
+  }
+
+  function showSpot(spotId: number) {
+    if (openId === spotId) {
+      return;
+    }
+    setOpenId(spotId);
+    if (isKpiTarget(spotId)) {
+      recordSpotTap(spotId);
+    }
   }
 
   return (
@@ -45,7 +64,7 @@ export function GuideMap({ floor1, floor2 }: Props) {
               aria-label={spot.name}
               className="spot-pin"
               data-open={openId === spot.id}
-              onClick={() => setOpenId(spot.id)}
+              onClick={() => showSpot(spot.id)}
               style={{
                 left: `${pin.leftPercent}%`,
                 top: `${pin.topPercent}%`,

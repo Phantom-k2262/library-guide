@@ -16,7 +16,7 @@ description: >-
 
 ## 今のブランチ
 
-`spike/library-navigation` では画面までを作る。手順は `.loop/screen-poc.md`。1周で未完了の切片を1つだけ進め、回数の API、SQLite、加算、QR 画像は作らない。設計の正本は図書館課題の `02_設計/設計の軸.md`。
+`feat/formal-e2e-coverage` では、既にある回数記録を通し確認し、カバレッジ 80% を門にする。手順は `.loop/formal-e2e-coverage.md`。回数の関数、JSON、APIは作り直さない。QR画像、Tunnel、SQLiteは作らない。設計の正本は図書館課題の `02_設計/基本設計.md`。
 
 ## 今回作るもの
 

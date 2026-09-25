@@ -2,15 +2,22 @@
 
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { GuideMap } from "./guide-map";
 import { spotsOnFloor } from "../domain/spots";
 
 const floor1 = spotsOnFloor(1);
 const floor2 = spotsOnFloor(2);
+const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({}) });
+
+beforeEach(() => {
+  fetchMock.mockClear();
+  vi.stubGlobal("fetch", fetchMock);
+});
 
 afterEach(() => {
   cleanup();
+  vi.unstubAllGlobals();
 });
 
 describe("地図", () => {
@@ -67,5 +74,25 @@ describe("説明", () => {
 
     await user.click(screen.getByRole("button", { name: "閉じる" }));
     expect(screen.queryByText(bunko!.desc)).toBeNull();
+  });
+
+  it("対象スポットの開き直しだけ回数APIへspotIdを渡す", async () => {
+    const user = userEvent.setup();
+    const entrance = floor1.find((spot) => spot.id === 1);
+    render(<GuideMap floor1={floor1} floor2={floor2} />);
+
+    await user.click(screen.getByRole("button", { name: literary!.name }));
+    await user.click(screen.getByRole("button", { name: literary!.name }));
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toEqual({
+      spotId: literary!.id,
+    });
+
+    await user.click(screen.getByRole("button", { name: "閉じる" }));
+    await user.click(screen.getByRole("button", { name: literary!.name }));
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    await user.click(screen.getByRole("button", { name: entrance!.name }));
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 });
